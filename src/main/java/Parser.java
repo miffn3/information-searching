@@ -24,7 +24,7 @@ public class Parser {
         Elements data = null;
         System.out.println("=== Parsing start ===");
 
-        for (int i = 1; i <= 1; i++) {
+        for (int i = 1; i <= 50; i++) {
 
             doc = Jsoup.connect("https://www.xboxachievements.com/games/xbox-one/" + i + "/")
                     .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36")
@@ -67,7 +67,7 @@ public class Parser {
                     "href=\"",
                     '\"');
             
-            Game game = new Game(cover, name, amountOfAchievements, amountOfPoints, href);
+            Game game = new Game(cover, name, Long.valueOf(amountOfAchievements), Long.valueOf(amountOfPoints), href);
             gameList.add(game);
             
             System.out.println("\"" + name + "\" add in list");

@@ -22,3 +22,7 @@
 /target/
 
 *index*
+/GoogleNews-vectors-negative300.bin
+/model_fast_text_Base.bin
+/facebook_model.bin
+/GoogleNews-vectors-negative300-SLIM.bin

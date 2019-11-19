@@ -2,14 +2,14 @@ public class Game {
 
     private String cover;
     private String name;
-    private String amountOfAchievements;
-    private String amountOfPoints;
+    private Long amountOfAchievements;
+    private Long amountOfPoints;
     private String href;
 
     public Game() {
     }
 
-    public Game(String cover, String name, String amountOfAchievements, String amountOfPoints, String href) {
+    public Game(String cover, String name, Long amountOfAchievements, Long amountOfPoints, String href) {
         this.cover = cover;
         this.name = name;
         this.amountOfAchievements = amountOfAchievements;
@@ -33,19 +33,19 @@ public class Game {
         this.name = name;
     }
 
-    public String getAmountOfAchievements() {
+    public Long getAmountOfAchievements() {
         return amountOfAchievements;
     }
 
-    public void setAmountOfAchievements(String amountOfAchievements) {
+    public void setAmountOfAchievements(Long amountOfAchievements) {
         this.amountOfAchievements = amountOfAchievements;
     }
 
-    public String getAmountOfPoints() {
+    public Long getAmountOfPoints() {
         return amountOfPoints;
     }
 
-    public void setAmountOfPoints(String amountOfPoints) {
+    public void setAmountOfPoints(Long amountOfPoints) {
         this.amountOfPoints = amountOfPoints;
     }
 

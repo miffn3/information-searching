@@ -1,5 +1,7 @@
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.IntPoint;
+import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
@@ -27,12 +29,12 @@ public class Indexer {
 
     private static Document getDocument(Game game) {
         Document document = new Document();
-        document.add(new StringField(Constant.COVER.value, game.getCover(), Field.Store.YES));
-        document.add(new TextField(Constant.NAME.value, game.getName(), Field.Store.YES));
-        document.add(new StringField(Constant.AMOUNT_OF_ACHIEVEMENTS.value,
-                game.getAmountOfAchievements(), Field.Store.YES));
-        document.add(new StringField(Constant.AMOUNT_OF_POINTS.value, game.getAmountOfPoints(), Field.Store.YES));
-        document.add(new StringField(Constant.HREF.value, game.getHref(), Field.Store.YES));
+        document.add(new StringField(Constant.COVER, game.getCover(), Field.Store.YES));
+        document.add(new TextField(Constant.NAME, game.getName(), Field.Store.YES));
+        document.add(new LongPoint(Constant.AMOUNT_OF_ACHIEVEMENTS,
+                game.getAmountOfAchievements()));
+        document.add(new LongPoint(Constant.AMOUNT_OF_POINTS, game.getAmountOfPoints()));
+        document.add(new StringField(Constant.HREF, game.getHref(), Field.Store.YES));
         return document;
     }
 
