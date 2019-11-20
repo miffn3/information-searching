@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Main {
+public class Task1 {
     public static void main(String[] args) {
         String dictPath = "src/main/resources/rus_dic.txt";
 
