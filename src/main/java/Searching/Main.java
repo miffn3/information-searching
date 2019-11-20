@@ -1,6 +1,8 @@
-import org.apache.lucene.queryparser.classic.ParseException;
+package Searching;
 
-import java.io.IOException;
+import Searching.Model.Game;
+import Searching.Searcher.Searcher;
+
 import java.util.ArrayList;
 
 public class Main {
@@ -8,17 +10,17 @@ public class Main {
         String indexPath = "index";
 
         //Indexing
-//        ArrayList<Game> gameList = new ArrayList<>();
+//        ArrayList<Searching.Model.Game> gameList = new ArrayList<>();
 //        try {
-//            Parser.loadData(gameList);
+//            Searching.Parser.Parser.loadData(gameList);
 //        } catch (IOException ex) {
 //            ex.printStackTrace();
 //        }
 //
-//        Indexer indexer = null;
+//        Searching.Searcher.Indexer indexer = null;
 //
 //        try {
-//            indexer = new Indexer(indexPath);
+//            indexer = new Searching.Searcher.Indexer(indexPath);
 //            indexer.createIndex(gameList);
 //        } catch (IOException io) {
 //            io.printStackTrace();
@@ -28,36 +30,36 @@ public class Main {
         System.out.println("=== Searching start ===");
         Searcher searcher = new Searcher();
 
-//        ArrayList<Game> byAmountOfAchievements = null;
+//        ArrayList<Searching.Model.Game> byAmountOfAchievements = null;
 //        try {
-//            byAmountOfAchievements = searcher.search(Constant.AMOUNT_OF_ACHIEVEMENTS, "12", indexPath, null);
+//            byAmountOfAchievements = searcher.search(Searching.Constant.Constant.AMOUNT_OF_ACHIEVEMENTS, "12", indexPath, null);
 //        } catch (IOException | ParseException io) {
 //            io.printStackTrace();
 //        }
 //
 //        System.out.println("Results:");
-//        for (Game game : byAmountOfAchievements) {
+//        for (Searching.Model.Game game : byAmountOfAchievements) {
 //            System.out.println(" " + game.getName());
 //        }
 //        System.out.println();
 //
-//        ArrayList<Game> byName = null;
+//        ArrayList<Searching.Model.Game> byName = null;
 //        try {
-//            byName = searcher.search(Constant.NAME, "ACA NEOGEO", indexPath, null);
+//            byName = searcher.search(Searching.Constant.Constant.NAME, "ACA NEOGEO", indexPath, null);
 //        } catch (IOException | ParseException io) {
 //            io.printStackTrace();
 //        }
 //
 //        System.out.println("Results:");
-//        for (Game game : byName) {
+//        for (Searching.Model.Game game : byName) {
 //            System.out.println(" " + game.getName());
 //        }
 //
-//        ArrayList<Game> byRange = null;
-//        byRange = searcher.search(Constant.AMOUNT_OF_ACHIEVEMENTS, "10", "15");
+//        ArrayList<Searching.Model.Game> byRange = null;
+//        byRange = searcher.search(Searching.Constant.Constant.AMOUNT_OF_ACHIEVEMENTS, "10", "15");
 //
 //        System.out.println("Results:");
-//        for (Game game : byRange) {
+//        for (Searching.Model.Game game : byRange) {
 //            System.out.println(" " + game.getName());
 //        }
 
@@ -73,10 +75,10 @@ public class Main {
 
 
             //  Write all games to txt
-//        FileUtils.writeToFile(gameList, "games.txt");
+//        Searching.Utils.FileUtils.writeToFile(gameList, "games.txt");
 //          //Get all words from games' names and write it to txt
-//        WordUtils.getWordsData(
+//        Searching.Utils.WordUtils.getWordsData(
 //           //Write synonyms to txt
-//        Synonym.getSynonyms();
+//        Searching.Searcher.Synonym.getSynonyms();
     }
 }

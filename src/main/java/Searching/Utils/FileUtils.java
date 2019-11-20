@@ -1,3 +1,6 @@
+package Searching.Utils;
+
+import Searching.Model.Game;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;

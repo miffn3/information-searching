@@ -1,6 +1,9 @@
+package Searching.Searcher;
+
+import Searching.Constant.Constant;
+import Searching.Model.Game;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;

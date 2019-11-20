@@ -1,3 +1,6 @@
+package Searching.Parser;
+
+import Searching.Model.Game;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

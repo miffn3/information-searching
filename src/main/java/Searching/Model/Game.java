@@ -1,3 +1,5 @@
+package Searching.Model;
+
 public class Game {
 
     private String cover;

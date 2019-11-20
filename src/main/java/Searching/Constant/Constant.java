@@ -1,3 +1,5 @@
+package Searching.Constant;
+
 public class Constant {
     public static final String COVER = "game_cover";
     public static final String NAME = "game_name";

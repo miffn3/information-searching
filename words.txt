@@ -40,7 +40,7 @@ Things
 Rememoried
 WMD
 Arkania
-Game
+Searching.Model.Game
 Achtung
 Madden
 Forged
