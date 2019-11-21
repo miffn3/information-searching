@@ -1,6 +1,6 @@
 package Searching.Utils;
 
-import Searching.Model.Game;
+import Searching.Model.Book;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -9,22 +9,24 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class WordUtils {
-    public static void getWordsData(){
+    public static void getWordsData(String wordsPath, String booksPath){
         try {
-            List<Game> games = FileUtils.readGamesList("games.txt");
+            List<Book> books = FileUtils.readBooksList(booksPath);
             Set<String> words = new HashSet<>();
-            games.stream().forEach(game-> words.addAll(WordUtils.getWords(game)));
-            FileUtils.writeToFileByLine(words, "words.txt");
+            books.stream().forEach(book-> words.addAll(WordUtils.getWords(book)));
+            FileUtils.writeToFileByLine(words, wordsPath);
         } catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    private static Set<String> getWords(Game game){
-        if (game == null){
+    private static Set<String> getWords(Book book){
+        if (book == null){
             return new HashSet<>();
         }
-        Set<String> words = getWords(game.getName());
+        Set<String> words = getWords(book.getTitle());
+        words.addAll(getWords(book.getSummary()));
+        words.addAll(getWords(book.getType()));
         return words;
     }
 

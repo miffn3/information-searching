@@ -1,9 +1,10 @@
 package Searching.Searcher;
 
 import Searching.Constant.Constant;
-import Searching.Model.Game;
+import Searching.Model.Book;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -22,81 +23,80 @@ import java.util.ArrayList;
 
 public class Searcher {
 
-    public ArrayList<Game> search(String constant, String text, String indexDirectoryPath, Query queryOpt) throws IOException, ParseException {
+    private static final int NUM_OF_DOCS = 40;
+
+    private ArrayList<Book> search(String indexDirectoryPath, Query query, int numOfDocs) throws IOException {
         Directory indexDirectory = FSDirectory.open(new File(indexDirectoryPath).toPath());
         IndexReader indexReader = DirectoryReader.open(indexDirectory);
         IndexSearcher indexSearcher = new IndexSearcher(indexReader);
-
-        Query query = null;
-        if (queryOpt == null) {
-            if (constant.equals(Constant.AMOUNT_OF_ACHIEVEMENTS) || constant.equals(Constant.AMOUNT_OF_POINTS)) {
-                long number =  Long.parseLong(text);
-                query = LongPoint.newRangeQuery(Constant.AMOUNT_OF_ACHIEVEMENTS,number, number);
-            } else {
-                QueryParser queryParser = new QueryParser(constant, new StandardAnalyzer());
-                query = queryParser.parse(text);
-            }
-        } else {
-            query = queryOpt;
-        }
         System.out.println("Search '" + query + "'");
-
-        TopDocs docs = indexSearcher.search(query, 10);
-
+        TopDocs docs = indexSearcher.search(query, numOfDocs);
         long num = docs.totalHits;
         System.out.println("Number of results: " + num);
 
-        ArrayList<Game> searchResult = new ArrayList<>();
+        ArrayList<Book> searchResult = new ArrayList<>();
 
         for(ScoreDoc scoreDoc : docs.scoreDocs){
             Document doc = indexSearcher.doc(scoreDoc.doc);
-            long namOfAchievements = 0;
-            long numOfPoints = 0;
-            if ( doc.get(Constant.AMOUNT_OF_ACHIEVEMENTS) != null) {
-                namOfAchievements = Long.valueOf(doc.get(Constant.AMOUNT_OF_ACHIEVEMENTS));
+            long isbn = 0;
+            int price = 0;
+            if ( doc.get(Constant.ISBN) != null) {
+                isbn = Long.valueOf(doc.get(Constant.ISBN));
             }
-            if (doc.get(Constant.AMOUNT_OF_POINTS) != null) {
-                numOfPoints = Long.valueOf(doc.get(Constant.AMOUNT_OF_POINTS));
+            if (doc.get(Constant.PRICE) != null) {
+                price = Integer.valueOf(doc.get(Constant.PRICE));
             }
 
-            Game game = new Game(doc.get(Constant.COVER),
-                    doc.get(Constant.NAME),
-                    namOfAchievements,
-                    numOfPoints,
-                    doc.get(Constant.HREF));
-            searchResult.add(game);
+            Book book = new Book(doc.get(Constant.TITLE),
+                    doc.get(Constant.AUTHOR),
+                    doc.get(Constant.TYPE),
+                    doc.get(Constant.SUMMARY),
+                    price,
+                    isbn,
+                    doc.get(Constant.PUBLISHER),
+                    doc.get(Constant.PUBLICATION_DATE));
+            searchResult.add(book);
         }
         return searchResult;
     }
 
-    public ArrayList<Game> search(String constant, String lowerValue, String upperValue)  {
-        long achievementsLower =  Long.parseLong(lowerValue);
-        long  achievementsUpper = Long.parseLong(upperValue);
-        Query query = LongPoint.newRangeQuery(constant, achievementsLower, achievementsUpper);
-        ArrayList<Game> games = new ArrayList<>();
-        try {
-            games =  search(null, null, "index", query);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    public ArrayList<Book> searchByRange(String constant, String indexPathDirectory,
+                                         String lowerValue, String upperValue) throws IOException {
+        Query query = null;
+        if (constant.equals(Constant.ISBN)) {
+            long lower = Long.parseLong(lowerValue);
+            long upper = Long.parseLong(upperValue);
+            query = LongPoint.newRangeQuery(constant, lower, upper);
         }
-
-        return games;
+        if (constant.equals(Constant.PRICE)) {
+            int lower = Integer.parseInt(lowerValue);
+            int upper = Integer.parseInt(upperValue);
+            query = IntPoint.newRangeQuery(constant, lower, upper);
+        }
+        return  search(indexPathDirectory, query, NUM_OF_DOCS);
     }
 
-    public ArrayList<Game> searchBySynonym(String search)  {
-        QueryParser queryParser = new QueryParser(Constant.NAME, new SynonymAnalyzer());
+    public ArrayList<Book> searchBySynonym(String constant, String indexPathDirectory,
+                                           String phrase) throws ParseException, IOException {
+        QueryParser queryParser = new QueryParser(constant, new SynonymAnalyzer());
         Query querySynonyms = null;
-        try {
-            querySynonyms = queryParser.parse(search);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        querySynonyms = queryParser.parse(phrase);
+        return search(indexPathDirectory, querySynonyms, NUM_OF_DOCS);
+    }
+
+    public ArrayList<Book> searchByText(String constant, String indexPathDirectory,
+                                        String text) throws ParseException, IOException {
+        Query query = null;
+        if (constant.equals(Constant.ISBN)) {
+            long number =  Long.parseLong(text);
+            query = LongPoint.newRangeQuery(Constant.ISBN,number, number);
+        } else if ( constant.equals(Constant.PRICE)) {
+            int number = Integer.parseInt(text);
+            query = IntPoint.newRangeQuery(Constant.PRICE,number, number);
+        } else {
+            QueryParser queryParser = new QueryParser(constant, new StandardAnalyzer());
+            query = queryParser.parse(text);
         }
-        ArrayList<Game> games = new ArrayList<>();
-        try {
-            games =  search(null,null,"index", querySynonyms);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return games;
+        return search(indexPathDirectory, query, NUM_OF_DOCS);
     }
 }

@@ -19,11 +19,11 @@ public class Synonym {
 
     private static final int SYNONYMS_COUNT = 5;
 
-    public static void getSynonyms() {
+    public static void getSynonyms(String synonymsPath, String wordsPath) {
         try {
-            Word2Vec w2vModel = WordVectorSerializer.readWord2VecModel("GoogleNews-vectors-negative300-SLIM.bin");
+            Word2Vec w2vModel = WordVectorSerializer.readWord2VecModel("model_fast_text_Base.bin");
             List<Collection<String>> result = new ArrayList<>();
-            List<String> words = Files.readAllLines(Paths.get("words.txt"));
+            List<String> words = Files.readAllLines(Paths.get(wordsPath));
             for (String word : words) {
                 Collection<String> synonyms = w2vModel.wordsNearest(word, SYNONYMS_COUNT);
                 if (!(synonyms == null || synonyms.isEmpty())) {
@@ -31,7 +31,7 @@ public class Synonym {
                     result.add(synonyms);
                 }
             }
-            writeToFileByLine(result, "synonyms.txt");
+            writeToFileByLine(result, synonymsPath);
         } catch (IOException io) {
             io.printStackTrace();
         }
