@@ -1,6 +1,6 @@
 package Searching.Utils;
 
-import Searching.Model.Game;
+import Searching.Model.Book;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -39,11 +39,11 @@ public class FileUtils {
         }
     }
 
-    public static ArrayList<Game> readGamesList(String fileName) throws IOException {
-        Type listType = new TypeToken<ArrayList<Game>>() {}.getType();
+    public static ArrayList<Book> readBooksList(String fileName) throws IOException {
+        Type listType = new TypeToken<ArrayList<Book>>() {}.getType();
         FileReader fileReader = new FileReader(new File(fileName));
         JsonReader reader = new JsonReader(fileReader);
-        ArrayList<Game> result = gson.fromJson(reader, listType);
+        ArrayList<Book> result = gson.fromJson(reader, listType);
         fileReader.close();
         return result;
     }

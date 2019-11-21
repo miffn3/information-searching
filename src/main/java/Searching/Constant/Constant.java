@@ -1,9 +1,12 @@
 package Searching.Constant;
 
 public class Constant {
-    public static final String COVER = "game_cover";
-    public static final String NAME = "game_name";
-    public static final String AMOUNT_OF_ACHIEVEMENTS = "game_amount_of_achievements";
-    public static final String AMOUNT_OF_POINTS = "game_amount_of_points";
-    public static final String HREF = "game_href";
+    public static final String TITLE = "book_title";
+    public static final String AUTHOR = "book_author";
+    public static final String TYPE = "book_type";
+    public static final String SUMMARY = "book_summary";
+    public static final String PRICE = "book_price";
+    public static final String ISBN = "book_isbn";
+    public static final String PUBLISHER = "book_publisher";
+    public static final String PUBLICATION_DATE = "book_publication_date";
 }
